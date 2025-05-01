@@ -1,7 +1,8 @@
 
 const Footer = () => {
   return (
-    <footer className="absolute bottom-0 w-screen bg-gray-800 text-white py-3 px-4 mt-auto">
+    <>
+        <footer className="absolute bottom-[-10vh] w-full  bg-gray-800 text-white h-[10vh] flex items-center">
         <div className="container mx-auto text-center">
           <p className="text-sm">&copy; {new Date().getFullYear()} Language Learning Bot. All rights reserved.</p>
           <div className="mt-2 space-x-4">
@@ -13,6 +14,7 @@ const Footer = () => {
           </div>
         </div>
         </footer>
+    </>
   )
 }
 

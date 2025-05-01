@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router"
 import Footer from "../components/Footer"
-import { signal} from "@preact/signals"
+import { signal} from '@preact/signals-react'
 
 export const currentPath = signal<string>("")
 const AuthLayout = () => {

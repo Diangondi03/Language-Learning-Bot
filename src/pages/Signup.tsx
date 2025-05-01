@@ -2,9 +2,10 @@ import { Formik, Form} from 'formik';
 import { BsPerson, BsEnvelope, BsKeyFill} from 'react-icons/bs'; // Assuming you might add password later
 import * as Yup from 'yup';
 import { InputField } from '../components/InputField';
-import { FormFieldConfig } from '../interfaces';
+import { FormFieldConfig, SignupValues } from '../interfaces';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import axiosInstance from '../axiosConfig';
 
 
 
@@ -15,7 +16,11 @@ const SignupSchema = Yup.object().shape({
     .required('Required'),
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string()
-    .min(2, 'Too Short!')
+    .min(8, 'Password must be at least 8 characters long')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      `Password must contain:,- At least one uppercase letter,- At least one lowercase letter,- At least one number,- At least one special character (@$!%*?&)`
+        )
     .required('Required'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords must match')
@@ -34,6 +39,22 @@ const formFields: FormFieldConfig[] = [
 
 
 export const Signup = () => {
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (values: SignupValues) => {
+    try {
+      const {username, email, password} = values; // Destructure the values object
+      await axiosInstance.post('/signup', {username,email,password});
+      navigate('/auth/login'); 
+    }
+    catch (error) {
+      console.error(error); // Handle error response
+    }
+
+  };
+
+
   return (
       <>
           <Formik
@@ -44,10 +65,7 @@ export const Signup = () => {
               confirmPassword: '',
             }}
             validationSchema={SignupSchema}
-            onSubmit={values => {
-              // same shape as initial values
-              console.log(values);
-            }}
+            onSubmit={handleSubmit}
           >
             {({ errors, touched }) => (
               <Form className="space-y-4">

@@ -1,38 +1,44 @@
 import { Formik, Form} from 'formik';
-import { BsPerson, BsEnvelope, BsKeyFill} from 'react-icons/bs'; // Assuming you might add password later
+import { BsEnvelope, BsKeyFill} from 'react-icons/bs'; 
 import * as Yup from 'yup';
-import React from 'react'; // Import React for JSX types
 import { InputField } from '../components/InputField';
-import { FormFieldConfig } from '../interfaces';
+import { FormFieldConfig, LoginValues } from '../interfaces';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import axiosInstance from '../axiosConfig';
 
-// Define the props for the InputField component
-
-
-// Reusable InputField component
 
 
 const SignupSchema = Yup.object().shape({
 
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string()
-    .min(2, 'Too Short!')
     .required('Required'),
 
 });
 
-
-
-// Array of input field configurations
 const formFields: FormFieldConfig[] = [
     { name: 'email', label: 'Email', type: 'email', icon: <BsEnvelope /> },
     { name: 'password', label: 'Password',type:"password",icon:<BsKeyFill/> },
 ];
 
 
+
 export const Login = () => {
-  
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (values: LoginValues) => {
+    try {
+      const res = await axiosInstance.post('/login', values);
+      localStorage.setItem('token', res.data.token); // Store the token in local storage
+      navigate('/'); 
+    }
+    catch (error) {
+      console.error(error); // Handle error response
+    }
+
+  };
   
   return (
         <>
@@ -42,10 +48,7 @@ export const Login = () => {
               password: '',
             }}
             validationSchema={SignupSchema}
-            onSubmit={values => {
-              // same shape as initial values
-              console.log(values);
-            }}
+            onSubmit={handleSubmit}
           >
             {({ errors, touched }) => (
               <Form className="space-y-4">

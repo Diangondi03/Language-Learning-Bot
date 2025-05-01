@@ -13,3 +13,14 @@ export interface FormFieldConfig {
     type?: string;
     icon?: React.ReactNode;
 }
+
+export interface LoginValues {
+  email: string;
+  password: string;
+}
+
+export interface SignupValues {
+  username: string;
+  email: string;
+  password: string;
+}

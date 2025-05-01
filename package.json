@@ -11,13 +11,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@preact/signals": "^2.0.4",
+    "@preact/signals-react": "^3.0.1",
     "@tailwindcss/vite": "^4.1.4",
+    "axios": "^1.9.0",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "daisyui": "^5.0.28",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "formik": "^2.4.6",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.15.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

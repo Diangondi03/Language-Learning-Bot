@@ -6,6 +6,8 @@ import { FormFieldConfig, LoginValues } from '../interfaces';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router';
 import axiosInstance from '../axiosConfig';
+import { useSignal } from '@preact/signals-react';
+import { useSignals } from '@preact/signals-react/runtime';
 
 
 
@@ -25,7 +27,8 @@ const formFields: FormFieldConfig[] = [
 
 
 export const Login = () => {
-
+  const loginError = useSignal<string>("");
+  useSignals()
   const navigate = useNavigate();
 
   const handleSubmit = async (values: LoginValues) => {
@@ -35,6 +38,7 @@ export const Login = () => {
       navigate('/'); 
     }
     catch (error) {
+      loginError.value = "Invalid email or password"; // Set error message
       console.error(error); // Handle error response
     }
 
@@ -42,6 +46,7 @@ export const Login = () => {
   
   return (
         <>
+          <h1 className="text-md text-center text-error">{loginError}</h1>
           <Formik
             initialValues={{
               email: '',

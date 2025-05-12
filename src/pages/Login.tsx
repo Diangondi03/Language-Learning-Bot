@@ -33,7 +33,7 @@ export const Login = () => {
 
   const handleSubmit = async (values: LoginValues) => {
     try {
-      const res = await axiosInstance.post('/login', values);
+      const res = await axiosInstance.post('/auth/login', values);
       localStorage.setItem('token', res.data.token); // Store the token in local storage
       navigate('/'); 
     }

@@ -45,7 +45,7 @@ export const Signup = () => {
   const handleSubmit = async (values: SignupValues) => {
     try {
       const {username, email, password} = values; // Destructure the values object
-      await axiosInstance.post('/signup', {username,email,password});
+      await axiosInstance.post('/auth/signup', {username,email,password});
       navigate('/auth/login'); 
     }
     catch (error) {

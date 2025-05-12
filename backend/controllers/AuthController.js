@@ -62,7 +62,6 @@ export const loginUser = asyncHandler(async (req, res) => {
     { expiresIn: '24h' } // Token valid for 24 hours
   );
   res.status(200).json({
-    message: 'Login successful',
     token,
     user: {
       id: user.user_id,

@@ -11,7 +11,7 @@ const AuthLayout = () => {
     return (
         <>
             <div className="flex flex-row justify-between min-h-screen mb-[10vh]">
-                <div className={` min-h-screen w-1/2 hidden lg:flex items-center bg-white`}>
+                <div className={`min-h-screen w-1/2 hidden lg:flex items-center bg-white`}>
                 <img src={loginImage} className=""/>
                 </div>
                     <div className="flex flex-col items-center justify-center min-h-screen bg-base-200 p-4 w-full lg:w-1/2">

@@ -1,18 +1,24 @@
 import { TbLogout2, TbSettings2 } from "react-icons/tb"
+import { useNavigate } from "react-router";
 
 const LowerButtons = () => {
+    const navigate = useNavigate()
     const clickLogout = () => {
         const modal = document.getElementById('logoutModal') as HTMLDialogElement | null;
         if (modal && typeof modal.showModal === 'function') {
             modal.showModal();
         }
     }
+    const clickSettings = () =>{
+        navigate('/app/settings')
+        document.getElementById('my-drawer-2')?.click()
+    }
 
     return (
         <div className="absolute bottom-5 w-fit flex flex-col gap-2 ">
 
             <li>
-                <button className="btn btn-ghost justify-start w-full rounded-2xl">
+                <button className="btn btn-ghost justify-start w-full rounded-2xl" onClick={clickSettings}>
                     <TbSettings2/>
                     Settings
                 </button>

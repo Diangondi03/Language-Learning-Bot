@@ -35,7 +35,7 @@ export const Login = () => {
     try {
       const res = await axiosInstance.post('/auth/login', values);
       localStorage.setItem('token', res.data.token); // Store the token in local storage
-      navigate('/'); 
+      navigate('/app'); 
     }
     catch (error) {
       loginError.value = "Invalid email or password"; // Set error message

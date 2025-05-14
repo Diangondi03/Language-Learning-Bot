@@ -23,6 +23,11 @@ const AppLayout = () => {
     }
 
     useLayoutEffect(() => {
+        const theme = localStorage.getItem('theme')
+        if(theme && theme==='dark'){
+            document.body.classList.add('dark')
+        }
+
         getUser()
     }, [])
     if (!user.value) {
@@ -34,7 +39,7 @@ const AppLayout = () => {
     <>
     <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center  bg-base-200 ">
+        <div className="drawer-content flex flex-col items-center  bg-base-200 dark:bg-neutral-900 ">
             <label htmlFor="my-drawer-2" className="drawer-button h-fit p-2 lg:hidden absolute top-4 left-4">
                 <BiMenu/>
             </label>

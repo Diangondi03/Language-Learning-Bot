@@ -9,7 +9,7 @@ const LogoutModal = () => {
     }
     return (
         <dialog id="logoutModal" className="modal modal-bottom sm:modal-middle">
-            <div className="modal-box">
+            <div className="modal-box dark:bg-neutral-800">
                 <p className="py-4">Are you sure you want to log out?</p>
                 <div className="modal-action">
                 <form method="dialog">

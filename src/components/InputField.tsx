@@ -20,11 +20,11 @@ export const InputField: React.FC<InputFieldProps> = ({ name, label, type = 'tex
       <label className="label" htmlFor={name}>
         {label}
       </label>
-      <label  className={`input input-bordered flex items-center gap-2 w-full ${errors[name] && touched[name] ? 'input-error' : ''}`}>
+      <label  className={`input input-bordered flex items-center gap-2 w-full dark:bg-neutral-800 ${errors[name] && touched[name] ? 'input-error' : ''}`}>
         {icon}
         <Field id={name} name={name} type={inputType} className="grow" placeholder={name} />
         {type === 'password' && (
-          <button className="cursor-pointer z-20" onClick={toggleInputType}>
+          <button className="cursor-pointer" onClick={toggleInputType}>
             {
               inputType.value === 'password' ? <MdVisibility className="text-xl" /> : <MdVisibilityOff className="text-xl" style={{ transform: 'rotate(180deg)' }} />
             }
@@ -32,7 +32,7 @@ export const InputField: React.FC<InputFieldProps> = ({ name, label, type = 'tex
               )}
 
       </label>
-      <div className="flex flex-col">
+      <div className="flex flex-col w-1/2">
 
       {errors[name] && touched[name] ? (
         errors[name].split(',').map((error: string, index: number) => (

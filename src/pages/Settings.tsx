@@ -1,28 +1,18 @@
-import { useSignals } from "@preact/signals-react/runtime"
-import { theme } from "../signals"
+
+import ThemeSection from "../components/Settings/ThemeSection";
+import UpdateForm from "../components/Settings/UpdateForm";
+
+
 
 const Settings = () => {
-  useSignals()
-  const setTheme =()=>{
-    document.body.classList.toggle('dark')
-    if(document.body.classList.contains('dark')){
-      localStorage.setItem('theme', 'dark')
-      theme.value = 'dark'
-    }
-    else{
-      localStorage.setItem('theme', 'light')
-      theme.value = 'light'
-    }
-  }
+
+
   
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center overflow-auto w-full h-screen pb-5">
       <h1 className="font-bold text-3xl text-center  my-5">Settings</h1>
-      <div className="flex items-center gap-3">
-
-      <h2 className="text-2xl text-center my-5 ">Theme</h2>
-      <input type="checkbox" checked={theme.value=='dark'} className="toggle theme-controller" onClick={setTheme}/>
-      </div>
+      <ThemeSection/>
+      <UpdateForm/>
     </div>
   )
 }

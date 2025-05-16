@@ -1,11 +1,12 @@
 import { Formik, Form} from 'formik';
-import { BsPerson, BsEnvelope, BsKeyFill} from 'react-icons/bs'; // Assuming you might add password later
+import { BsPerson, BsKeyFill} from 'react-icons/bs'; // Assuming you might add password later
 import * as Yup from 'yup';
 import { InputField } from '../components/InputField';
 import { FormFieldConfig, SignupValues } from '../interfaces';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router';
 import axiosInstance from '../axiosConfig';
+import { HiOutlineMail } from 'react-icons/hi';
 
 
 
@@ -32,7 +33,7 @@ const SignupSchema = Yup.object().shape({
 // Array of input field configurations
 const formFields: FormFieldConfig[] = [
     { name: 'username', label: 'Username', icon: <BsPerson /> },
-    { name: 'email', label: 'Email', type: 'email', icon: <BsEnvelope /> },
+    { name: 'email', label: 'Email', type: 'email', icon: <HiOutlineMail/> },
     { name: 'password', label: 'Password',type:"password",icon:<BsKeyFill/> },
     { name: 'confirmPassword', label: 'Confirm Password',type:"password",icon:<BsKeyFill/> },
 ];

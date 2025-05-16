@@ -6,6 +6,7 @@ const Home = () => {
 
   return (
     <>
+    <div className="w-[90%] md:w-[75%] h-full mt-[5vh] flex flex-col">
 
         <div className="min-h-[80vh] flex justify-center items-center flex-col gap-10">
             <h2>Start a chat</h2>
@@ -18,9 +19,10 @@ const Home = () => {
             </>
         ))}
         </div>
+
+
+    </div>
         <InputSection/>
-
-
     </>
   )
 }

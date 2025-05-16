@@ -6,6 +6,15 @@ const ChatList = () => {
     const indexSidebar = useSignal(0)
     const navigate = useNavigate()
     useSignals()
+
+    const clickChatItem = ()=>{
+        navigate("/app")
+        if (window.innerWidth < 1024) {
+            // User width is less than 1024
+            document.getElementById('my-drawer-2')?.click()
+        }
+    }
+
   return (
     <div className="max-h-[65vh] overflow-y-auto flex flex-col gap-2 no-scrollbar">
 
@@ -13,9 +22,7 @@ const ChatList = () => {
             <li key={i} className="group relative">
                 <button
                     className={`btn btn-ghost justify-start w-full rounded-2xl overflow-hidden text-ellipsis whitespace-nowrap flex items-center border-none ${indexSidebar.value === i ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-white" : "dark:hover:bg-neutral-600 dark:hover:text-white dark:hover:shadow-none"}`}
-                    onClick={()=>{
-                        navigate("/app")
-                    }}
+                    onClick={clickChatItem}
                 >
                     <span className="flex-1 text-left overflow-hidden text-ellipsis whitespace-nowrap">
                         Sidebar {i + 1}

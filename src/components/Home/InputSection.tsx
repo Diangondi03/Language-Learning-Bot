@@ -18,7 +18,7 @@ const InputSection = () => {
     }
 
     return (
-        <div className="w-full h-[15vh] md:h-[20vh]   sticky bottom-0 bg-base-200 dark:bg-neutral-900 flex items-start gap-4 shadow-[0_-15px_10px_0_rgba(255,255,255,0.8)] dark:shadow-[0_-15px_10px_0_rgba(23,23,23,0.8)]">
+        <div className="w-[95%] md:w-[75%] h-[15vh] md:h-[20vh]   sticky bottom-0 bg-base-200 dark:bg-neutral-900 flex items-start gap-4 shadow-[0_-15px_10px_0_rgba(255,255,255,0.8)] dark:shadow-[0_-15px_10px_0_rgba(23,23,23,0.8)]">
             <textarea
             className="textarea w-full textarea-bordered text-md  resize-none rounded-3xl border-gray-400 focus:outline-0 p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-gray-200"
             placeholder="Type your message here..."

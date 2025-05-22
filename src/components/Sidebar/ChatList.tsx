@@ -1,38 +1,56 @@
 import { useSignal, useSignals } from "@preact/signals-react/runtime";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useNavigate } from "react-router";
-
+import {chats} from "../../signals"
+import axiosInstance from "../../axiosConfig";
+import { useEffect } from "react";
 const ChatList = () => {
-    const indexSidebar = useSignal(0)
+    const indexSidebar = useSignal(-1)
     const navigate = useNavigate()
     useSignals()
 
-    const clickChatItem = ()=>{
-        navigate("/app")
+    const clickChatItem = (index) =>{
+        indexSidebar.value = index
+        navigate("/app/"+(index+1))
         if (window.innerWidth < 1024) {
             // User width is less than 1024
             document.getElementById('my-drawer-2')?.click()
         }
     }
+    
+    const getChatList = async() => {
+        try{
+
+            const res = await axiosInstance.get('/chat')
+            chats.value = res.data
+        }
+        catch(err){
+            console.log(err)
+        }
+
+    }
+    useEffect(()=>{
+        getChatList()
+    },[])
 
   return (
-    <div className="max-h-[65vh] overflow-y-auto flex flex-col gap-2 no-scrollbar">
+    <div className="max-h-[65vh] h-[65vh] overflow-y-auto flex flex-col gap-0">
 
-        {Array.from({ length: 30 }, (_, i) => (
+        {Array(6).fill("").map((chat, i) => (
             <li key={i} className="group relative">
                 <button
-                    className={`btn btn-ghost justify-start w-full rounded-2xl overflow-hidden text-ellipsis whitespace-nowrap flex items-center border-none ${indexSidebar.value === i ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-white" : "dark:hover:bg-neutral-600 dark:hover:text-white dark:hover:shadow-none"}`}
-                    onClick={clickChatItem}
+                    className={`btn btn-ghost justify-start w-[95%] rounded-full overflow-hidden text-ellipsis whitespace-nowrap flex items-center border-none hover:shadow-none ${indexSidebar.value === i ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-white" : "dark:hover:bg-neutral-600 dark:hover:text-white"}`}
+                    onClick={()=>clickChatItem(i)}
                 >
                     <span className="flex-1 text-left overflow-hidden text-ellipsis whitespace-nowrap">
-                        Sidebar {i + 1}
+                        {"Chat " + (i + 1)}
                     </span>
                     
                     <button
-                        className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-red-500 p-1 rounded-full hover:bg-red-100 cursor-pointer"
+                        className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-red-500 p-1 rounded-full hover:bg-red-100 cursor-default"
                         onClick={e => {
                             e.stopPropagation();
-                            indexSidebar.value +=1; // Remove the item from the list
+                            
                         }}
                         tabIndex={-1}
                     >

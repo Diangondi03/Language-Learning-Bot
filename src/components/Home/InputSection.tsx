@@ -1,8 +1,13 @@
 import { useSignal } from '@preact/signals-react';
 import { useSignals } from '@preact/signals-react/runtime';
 import { IoSend } from 'react-icons/io5'
+import { useParams } from 'react-router';
+import axiosInstance from '../../axiosConfig';
+import { messages } from '../../signals';
 
 const InputSection = () => {
+
+    const {chatId} = useParams()
     const inputText = useSignal<string>("");
     useSignals()
 
@@ -12,24 +17,44 @@ const InputSection = () => {
             inputText.value = target.value;
         }
     };
-    const sendText = () => {
-        if (inputText.value.trim() === "") return;
-        inputText.value = "";
+
+
+
+    const sendText = async () => {
+        if (inputText.value && inputText.value.trim()!=='') {
+            const message = {
+                content: inputText.value.trim(),
+                chatId,
+                is_user: true
+            }
+            const res = await axiosInstance.post('/message', message)
+            messages.value.push(res.data)
+            console.log(messages.value)
+            inputText.value = "";
+
+        }
     }
 
     return (
-        <div className="w-[95%] md:w-[75%] h-[15vh] md:h-[20vh]   sticky bottom-0 bg-base-200 dark:bg-neutral-900 flex items-start gap-4 shadow-[0_-15px_10px_0_rgba(255,255,255,0.8)] dark:shadow-[0_-15px_10px_0_rgba(23,23,23,0.8)]">
+        <div className="w-[100%]  h-[20vh] md:h-[25vh]  bg-base-200 dark:bg-neutral-900 flex items-start justify-center shadow-[0_-15px_10px_0_rgba(255,255,255,0.8)] dark:shadow-[0_-15px_10px_0_rgba(23,23,23,0.8)]">
+            <div className='relative w-[90%] md:w-[75%]'>
+
             <textarea
-            className="textarea w-full textarea-bordered text-md  resize-none rounded-3xl border-gray-400 focus:outline-0 p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-gray-200"
+            className="textarea w-full relative textarea-bordered text-md pr-20 resize-none rounded-3xl border-gray-400 focus:outline-0 p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-gray-200"
             placeholder="Type your message here..."
             value={inputText.value}
             onInput={handleInput}
-            rows={3}
-            ></textarea>
-            <button className={`btn ${inputText.value ? "btn-primary cursor-pointer" : "cursor-default bg-gray-200 text-gray-300 dark:bg-neutral-700 dark:text-neutral-800 dark:border-none dark:shadow-none"} btn-circle p-2 self-start`}
+            rows={4}
+            >
+
+
+            </textarea>
+            <button className={`absolute right-5 bottom-5 btn ${(inputText.value && inputText.value.trim()!=='') ? "btn-primary cursor-pointer" : "cursor-default bg-gray-200 text-gray-300 dark:bg-neutral-700 dark:text-neutral-800 dark:border-none dark:shadow-none"} btn-circle p-2 self-start`}
             onClick={sendText}>
             <IoSend/>
             </button>
+            </div>
+
         </div>
     )
 }

@@ -5,6 +5,8 @@ import { useSignal, useSignals } from "@preact/signals-react/runtime";
 
 export const InputField: React.FC<InputFieldProps> = ({ name, label, type = 'text', icon, errors, touched }) => {
   const inputType = useSignal<string>(type);
+  
+
   useSignals()
   const toggleInputType = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

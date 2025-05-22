@@ -9,6 +9,7 @@ import { Login } from './pages/Login.tsx'
 import Home from './pages/Home.tsx'
 import AppLayout from './layouts/AppLayout.tsx'
 import Settings from './pages/Settings.tsx'
+import Chat from './pages/Chat.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')!).render(
       <Route path='/app' element={<AppLayout/>}>
         <Route index element={<Home />} />
         <Route path="settings" element={<Settings />} />
+        <Route path=":chatId" element={<Chat/>} />
       </Route>
 
         <Route path='/auth' element={<AuthLayout />}>

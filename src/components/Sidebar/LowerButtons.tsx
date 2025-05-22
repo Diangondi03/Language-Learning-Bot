@@ -23,13 +23,13 @@ const LowerButtons = () => {
         <div className="absolute bottom-5 w-fit flex flex-col gap-2">
 
             <li>
-                <button className="btn btn-ghost justify-start w-full rounded-2xl dark:hover:bg-neutral-700 dark:hover:text-white" onClick={clickSettings}>
+                <button className="btn btn-ghost justify-start w-full rounded-2xl dark:hover:bg-neutral-700 dark:hover:text-white shadow-none" onClick={clickSettings}>
                     <TbSettings2/>
                     Settings
                 </button>
             </li>
             <li>
-                <button className="btn btn-ghost justify-start w-full rounded-2xl dark:hover:bg-neutral-700 dark:hover:text-white" onClick={clickLogout}>
+                <button className="btn btn-ghost justify-start w-full rounded-2xl dark:hover:bg-neutral-700 dark:hover:text-white shadow-none" onClick={clickLogout}>
                     <TbLogout2/>
                     Log Out
                 </button>

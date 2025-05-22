@@ -14,7 +14,6 @@ export const getUserById = asyncHandler( async(req, res) => {
     
         res.status(200).json(user);
     } catch (error) {
-        console.error('Error fetching user:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 })
@@ -88,7 +87,8 @@ export const updateUserById = asyncHandler(async (req, res) => {
         });
 
     } catch (error) {
-        console.error('Error updating user:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+

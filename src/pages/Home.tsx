@@ -1,7 +1,6 @@
-import { useEffect } from "react"
-import axiosInstance from "../axiosConfig"
+
 import InputSection from "../components/Home/InputSection"
-import { chats, messages, user } from "../signals"
+import { user } from "../signals"
 import { useSignals } from "@preact/signals-react/runtime"
 
 const Home = () => {

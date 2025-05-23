@@ -28,15 +28,15 @@ const InputSection = () => {
                 is_user: true
             }
             const res = await axiosInstance.post('/message', message)
-            messages.value.push(res.data)
-            console.log(messages.value)
+            messages.value =  [...messages.value, res.data]
+
             inputText.value = "";
 
         }
     }
 
     return (
-        <div className="w-[100%]  h-[20vh] md:h-[25vh]  bg-base-200 dark:bg-neutral-900 flex items-start justify-center shadow-[0_-15px_10px_0_rgba(255,255,255,0.8)] dark:shadow-[0_-15px_10px_0_rgba(23,23,23,0.8)]">
+        <div className="w-[100%] h-[20vh] md:h-[25vh]  bg-base-200 dark:bg-neutral-900 flex items-start justify-center shadow-[0_-15px_10px_0_rgba(255,255,255,0.8)] dark:shadow-[0_-15px_10px_0_rgba(23,23,23,0.8)]">
             <div className='relative w-[90%] md:w-[75%]'>
 
             <textarea

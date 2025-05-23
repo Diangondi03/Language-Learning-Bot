@@ -57,16 +57,21 @@ const UpdateForm = () => {
         try {
             const response = await axiosInstance.patch('/user', updatedUser);
 
-            if(response.data.message === "User updated successfully") {
+            if(response.data.message === "User updated successfully" && user.value) {
                 user.value.username = username;
                 user.value.email = email;
                 localStorage.setItem('token', response.data.token);
             }
             updateMessage.value = response.data.message;
 
-        } catch (error) {
-            updateMessage.value = error.response.data.message;
-        }
+        } catch (error: unknown) {
+            if (error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'data' in error.response && error.response.data && typeof error.response.data === 'object' && 'message' in error.response.data) {
+              // @ts-ignore
+              updateMessage.value = error.response.data.message;
+            } else {
+              updateMessage.value = "An unknown error occurred.";
+            }
+          }
         setTimeout(() => {
             updateMessage.value = "";
         }, 3000);
@@ -83,8 +88,8 @@ const UpdateForm = () => {
             </label>
             <Formik
             initialValues={{
-                username: user.value.username,
-                email: user.value.email,
+                username: user.value?.username ?? '',
+                email: user.value?.email ?? '',
                 password: '',
                 confirmPassword: '',
             }}

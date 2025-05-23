@@ -24,3 +24,25 @@ export interface SignupValues {
   email: string;
   password: string;
 }
+
+export interface User{
+  id: number;
+  username: string;
+  email: string;
+}
+
+export interface Chat{
+  chat_id:number;
+  date:string;
+  title:string;
+  user_id: number;
+
+}
+
+export interface Message {
+  content: string;
+  chatId: string;
+  is_user: boolean;
+
+}
+

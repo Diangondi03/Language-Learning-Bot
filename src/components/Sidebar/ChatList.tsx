@@ -9,7 +9,7 @@ const ChatList = () => {
     const navigate = useNavigate()
     useSignals()
 
-    const clickChatItem = (index) =>{
+    const clickChatItem = (index:number) =>{
         indexSidebar.value = index
         navigate("/app/"+(index+1))
         if (window.innerWidth < 1024) {
@@ -23,6 +23,7 @@ const ChatList = () => {
 
             const res = await axiosInstance.get('/chat')
             chats.value = res.data
+            console.log(chats.value)
         }
         catch(err){
             console.log(err)
@@ -36,7 +37,7 @@ const ChatList = () => {
   return (
     <div className="max-h-[65vh] h-[65vh] overflow-y-auto flex flex-col gap-0">
 
-        {Array(6).fill("").map((chat, i) => (
+        {Array(6).fill("").map((_, i) => (
             <li key={i} className="group relative">
                 <button
                     className={`btn btn-ghost justify-start w-[95%] rounded-full overflow-hidden text-ellipsis whitespace-nowrap flex items-center border-none hover:shadow-none ${indexSidebar.value === i ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-white" : "dark:hover:bg-neutral-600 dark:hover:text-white"}`}

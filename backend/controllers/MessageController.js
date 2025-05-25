@@ -19,7 +19,7 @@ export const getChatMessages = asyncHandler(async (req,res)=>{
 
 export const createMessage = asyncHandler(async (req, res) => {
     const { chatId,content,is_user } = req.body;
-
+    console.log(content)
     if (!chatId || !content) {
         return res.status(400).json({ message: 'chat_id, content are required' });
     }

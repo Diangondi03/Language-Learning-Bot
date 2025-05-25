@@ -9,6 +9,7 @@ import axiosInstance from '../axiosConfig';
 import { useSignal } from '@preact/signals-react';
 import { useSignals } from '@preact/signals-react/runtime';
 import { HiOutlineMail } from 'react-icons/hi';
+import { useEffect } from 'react';
 
 
 
@@ -31,6 +32,12 @@ export const Login = () => {
   const loginError = useSignal<string>("");
   useSignals()
   const navigate = useNavigate();
+  
+
+  //remove dark theme from body avoding to display it when redirecting to login page
+  useEffect(() => {
+    document.body.classList.remove('dark')
+  },[])
 
   const handleSubmit = async (values: LoginValues) => {
     try {

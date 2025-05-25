@@ -21,17 +21,35 @@ const InputSection = () => {
 
 
     const sendText = async () => {
-        if (inputText.value && inputText.value.trim()!=='') {
-            const message = {
+        try{
+
+            if (inputText.value && inputText.value.trim()!=='') {
+                const message = {
                 content: inputText.value.trim(),
                 chatId,
                 is_user: true
+                }
+                const history = messages.value.map((message)=>{
+                    return {role:message.is_user ? "user" : "model",parts:[{text:message.content}]}
+                })
+                const res = await axiosInstance.post('/message', message)
+                messages.value =  [...messages.value, res.data]
+
+                
+                
+                inputText.value = "";
+                const resGemini = await axiosInstance.post("/gemini", { prompt: res.data.content,history});
+                const geminiMessage = {
+                    content: resGemini.data.text,
+                    chatId,
+                    is_user:false
+                }
+                const geminiMessageRes = await axiosInstance.post('/message', geminiMessage)
+                messages.value =  [...messages.value, geminiMessageRes.data]
             }
-            const res = await axiosInstance.post('/message', message)
-            messages.value =  [...messages.value, res.data]
-
-            inputText.value = "";
-
+        }
+        catch (error){
+            console.error(error);
         }
     }
 

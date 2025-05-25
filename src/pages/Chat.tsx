@@ -4,6 +4,7 @@ import InputSection from "../components/Home/InputSection"
 import { chats, messages } from "../signals"
 import { useSignals } from "@preact/signals-react/runtime"
 import { useParams } from "react-router"
+import { marked } from 'marked'; 
 
 const Chat = () => {
     const {chatId} = useParams()
@@ -24,9 +25,13 @@ const Chat = () => {
     useEffect(() => {
         getMessages()
     }, [chatId])
+
     useEffect(() => {
         if (containerRef.current) {
-          containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        containerRef.current.scrollTo({
+            top: containerRef.current.scrollHeight,
+            behavior: "smooth"
+        });
         }
       }, [messages.value.length]);
 
@@ -40,8 +45,8 @@ const Chat = () => {
             !message.is_user ?
             
 
-                <p className="text-left my-5 ml-[5%] md:ml-[12.5%]">
-                    {message.content}
+                <p dangerouslySetInnerHTML={{ __html: marked.parse(message.content) }} className="text-left my-5 ml-[10%] md:ml-[15%] mr-[5%] md:mr-[12.5%]">
+                    
                 </p>
                 :
             

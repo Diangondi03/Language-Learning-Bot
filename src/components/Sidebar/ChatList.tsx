@@ -23,7 +23,7 @@ const ChatList = () => {
 
             const res = await axiosInstance.get('/chat')
             chats.value = res.data
-            console.log(chats.value)
+            
         }
         catch(err){
             console.log(err)

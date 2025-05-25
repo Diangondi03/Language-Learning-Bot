@@ -4,7 +4,8 @@
 themes: light --default;
 }
 html {
-    color:black
+    color:black;
+    scroll-behavior: smooth;
 }
 
 .dark {

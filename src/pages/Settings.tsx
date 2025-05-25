@@ -1,11 +1,12 @@
 
 import ThemeSection from "../components/Settings/ThemeSection";
 import UpdateForm from "../components/Settings/UpdateForm";
+import { indexSidebar } from "../signals";
 
 
 
 const Settings = () => {
-
+  indexSidebar.value = 0
 
   
   return (

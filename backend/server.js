@@ -42,7 +42,7 @@ async function generateText(prompt,history) {
   const chat = model.startChat({
     history: history, 
     generationConfig: {
-      maxOutputTokens: 1024, // Limit response length for efficiency
+      maxOutputTokens: 2048, // Limit response length for efficiency
       temperature: 0.5,     // Lower temperature for more focused, less creative responses
       topP: 0.9,
     },

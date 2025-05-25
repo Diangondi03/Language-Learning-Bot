@@ -9,6 +9,7 @@ const InputSection = () => {
 
     const {chatId} = useParams()
     const inputText = useSignal<string>("");
+    const responding = useSignal<boolean>(false)
     useSignals()
 
     const handleInput = (e: React.FormEvent<HTMLTextAreaElement>)  => {
@@ -24,6 +25,7 @@ const InputSection = () => {
         try{
 
             if (inputText.value && inputText.value.trim()!=='') {
+                responding.value = true
                 const message = {
                 content: inputText.value.trim(),
                 chatId,
@@ -51,6 +53,9 @@ const InputSection = () => {
         catch (error){
             console.error(error);
         }
+        finally{
+            responding.value = false
+        }
     }
 
     return (
@@ -58,7 +63,8 @@ const InputSection = () => {
             <div className='relative w-[90%] md:w-[75%]'>
 
             <textarea
-            className="textarea w-full relative textarea-bordered text-md pr-20 resize-none rounded-3xl border-gray-400 focus:outline-0 p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-gray-200"
+            disabled={responding.value}
+            className=" textarea w-full relative textarea-bordered text-md pr-20 resize-none rounded-3xl border-gray-400 focus:outline-0 p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-gray-200"
             placeholder="Type your message here..."
             value={inputText.value}
             onInput={handleInput}

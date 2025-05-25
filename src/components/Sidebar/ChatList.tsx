@@ -1,12 +1,12 @@
-import { useSignal, useSignals } from "@preact/signals-react/runtime";
+import {  useSignals } from "@preact/signals-react/runtime";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useNavigate, useParams } from "react-router";
-import {chats} from "../../signals"
+import {chats, indexSidebar} from "../../signals"
 import axiosInstance from "../../axiosConfig";
 import { useEffect } from "react";
 import { Chat } from "../../interfaces";
 const ChatList = () => {
-    const indexSidebar = useSignal(-1)
+    
     const navigate = useNavigate()
     const {chatId} = useParams()
     useSignals()

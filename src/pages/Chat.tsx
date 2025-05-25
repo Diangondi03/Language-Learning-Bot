@@ -45,7 +45,7 @@ const Chat = () => {
             !message.is_user ?
             
 
-                <p dangerouslySetInnerHTML={{ __html: marked.parse(message.content) }} className="text-left my-5 ml-[10%] md:ml-[15%] mr-[5%] md:mr-[12.5%]">
+                <p dangerouslySetInnerHTML={{ __html: marked.parse(message.content) }} className="text-left text-lg my-5 ml-[10%] md:ml-[15%] mr-[5%] md:mr-[12.5%] space-y-2">
                     
                 </p>
                 :

@@ -59,7 +59,8 @@ const InputSection = () => {
     }
 
     return (
-        <div className="w-[100%] h-[20vh] md:h-[25vh]  bg-base-200 dark:bg-neutral-900 flex items-start justify-center shadow-[0_-15px_10px_0_rgba(255,255,255,0.8)] dark:shadow-[0_-15px_10px_0_rgba(23,23,23,0.8)]">
+        <div className="w-[100%] h-35 md:h-[25vh]  bg-base-200 dark:bg-neutral-900 flex items-start justify-center relative m-0">
+            <div className=" absolute top-0  h-10 w-[90%] md:w-[75%] shadow-[0_-15px_10px_0_rgba(255,255,255,0.8)] dark:shadow-[0_-15px_10px_0_rgba(23,23,23,0.8)]"></div>
             <div className='relative w-[90%] md:w-[75%]'>
 
             <textarea

@@ -40,7 +40,7 @@ const AppLayout = () => {
     <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-center  bg-base-200 dark:bg-neutral-900 ">
-            <label htmlFor="my-drawer-2" className="drawer-button h-fit w-full sticky lg:hidden bg-inherit top-0 left-4 p-4">
+            <label htmlFor="my-drawer-2" className="drawer-button h-fit w-full absolute top-0 lg:hidden bg-inherit left-0 p-4">
                 <BiMenu/>
             </label>
             

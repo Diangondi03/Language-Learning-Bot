@@ -46,10 +46,10 @@ const Chat = () => {
 
   return (
     <>
-    <div  className="w-full h-[80vh] md:h-[75vh] flex flex-col">
+    <div  className="w-full h-[calc(100vh-140px)] md:h-[75vh] flex flex-col">
 
 
-        <div ref={containerRef} className="min-h-[75vh] h-[75vh] flex flex-col gap-10  overflow-y-auto py-10">
+        <div ref={containerRef} className="h-full flex flex-col gap-10  overflow-y-auto pb-10 pt-15">
             <h2 className="text-center">{chats.value[getChatIndex()]?.title}</h2>
             {messages.value.map( (message) => (
             

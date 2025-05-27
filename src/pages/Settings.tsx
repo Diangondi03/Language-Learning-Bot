@@ -10,7 +10,7 @@ const Settings = () => {
 
   
   return (
-    <div className="flex flex-col items-center overflow-auto w-full h-screen pb-5">
+    <div className="flex flex-col items-center overflow-auto w-full h-screen pb-5 mt-15 lg:mt-0">
       <h1 className="font-bold text-3xl text-center  my-5">Settings</h1>
       <ThemeSection/>
       <UpdateForm/>

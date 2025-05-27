@@ -8,6 +8,8 @@ import { marked } from 'marked';
 import { BiCopy } from "react-icons/bi"
 import { HiPlay } from "react-icons/hi2"
 
+import { RiDeleteBin5Line } from "react-icons/ri"
+
 const Chat = () => {
     const {chatId} = useParams()
     useSignals()
@@ -43,12 +45,21 @@ const Chat = () => {
         const index = chats.value.findIndex(chat => chat.chat_id === Number(chatId))
         return index
     }
+    const clickDelete = () => {
+        const modal = document.getElementById('deleteModal') as HTMLDialogElement | null;
+        if (modal && typeof modal.showModal === 'function') {
+            modal.showModal();
+        }
+    }
 
   return (
     <>
     <div  className="w-full h-[calc(100vh-140px)] md:h-[75vh] flex flex-col">
 
+    <button className="cursor-pointer z-1 right-4 top-4 absolute p-0" onClick={clickDelete}>
 
+        <RiDeleteBin5Line className="text-red-500 "/>
+    </button>
         <div ref={containerRef} className="h-full flex flex-col gap-10  overflow-y-auto pb-10 pt-15">
             <h2 className="text-center">{chats.value[getChatIndex()]?.title}</h2>
             {messages.value.map( (message) => (

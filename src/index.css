@@ -6,8 +6,13 @@ themes: light --default;
 html {
     color:black;
     scroll-behavior: smooth;
+    
 }
 
 .dark {
     color: whitesmoke;
+}
+
+:root:has(:is(.modal-open, .modal:target, .modal-toggle:checked + .modal, .modal[open])) {
+    scrollbar-gutter: auto !important;
 }

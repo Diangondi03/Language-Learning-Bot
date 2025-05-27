@@ -32,6 +32,14 @@ const ChatList = () => {
         }
 
     }
+    const clickDelete = () => {
+        const modal = document.getElementById('deleteModal') as HTMLDialogElement | null;
+        if (modal && typeof modal.showModal === 'function') {
+            document.body.style.overflowY = 'hidden'
+            modal.showModal();
+        }
+    }
+    
     useEffect(()=>{
         getChatList()
         indexSidebar.value = Number(chatId)
@@ -54,7 +62,7 @@ const ChatList = () => {
                         className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-red-500 p-1 rounded-full hover:bg-red-100 cursor-default"
                         onClick={e => {
                             e.stopPropagation();
-                            
+                            clickDelete()
                         }}
                         tabIndex={-1}
                     >

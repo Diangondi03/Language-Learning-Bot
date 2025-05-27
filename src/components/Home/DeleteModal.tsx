@@ -1,10 +1,22 @@
-
+import { useSignals } from "@preact/signals-react/runtime"
+import { chats, deleteId } from "../../signals"
+import axiosInstance from "../../axiosConfig"
+import { useNavigate } from "react-router"
 
 const DeleteModal = () => {
 
+    useSignals()
+    const navigate = useNavigate()
+    const handleDelete = async () => {
+        try{
 
-    const handleDelete = () => {
-        //
+            await axiosInstance.delete(`/chat/${deleteId.value}`)
+            chats.value = chats.value.filter(chat => chat.chat_id !== deleteId.value)
+            navigate("/app")
+
+        } catch(e){
+            console.log(e)
+        }
     }
     return (
         <dialog id="deleteModal" className="modal modal-bottom sm:modal-middle">

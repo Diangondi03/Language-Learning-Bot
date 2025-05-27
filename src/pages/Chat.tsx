@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import axiosInstance from "../axiosConfig"
 import InputSection from "../components/Home/InputSection"
-import { chats, messages } from "../signals"
+import { chats, deleteId, messages } from "../signals"
 import { useSignal, useSignals } from "@preact/signals-react/runtime"
 import { useParams } from "react-router"
 import { marked } from 'marked'; 
@@ -49,6 +49,7 @@ const Chat = () => {
         const modal = document.getElementById('deleteModal') as HTMLDialogElement | null;
         if (modal && typeof modal.showModal === 'function') {
             modal.showModal();
+            deleteId.value = Number(chatId)
         }
     }
 
@@ -56,7 +57,7 @@ const Chat = () => {
     <>
     <div  className="w-full h-[calc(100vh-140px)] md:h-[75vh] flex flex-col">
 
-    <button className="cursor-pointer z-1 right-4 top-4 absolute p-0" onClick={clickDelete}>
+    <button className="lg:hidden cursor-pointer z-1 right-4 top-4 absolute p-0" onClick={clickDelete}>
 
         <RiDeleteBin5Line className="text-red-500 "/>
     </button>

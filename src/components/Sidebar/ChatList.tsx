@@ -1,7 +1,7 @@
 import {  useSignals } from "@preact/signals-react/runtime";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useNavigate, useParams } from "react-router";
-import {chats, indexSidebar} from "../../signals"
+import {chats, indexSidebar, deleteId} from "../../signals"
 import axiosInstance from "../../axiosConfig";
 import { useEffect } from "react";
 import { Chat } from "../../interfaces";
@@ -37,6 +37,7 @@ const ChatList = () => {
         if (modal && typeof modal.showModal === 'function') {
             document.body.style.overflowY = 'hidden'
             modal.showModal();
+            deleteId.value = Number(chatId)
         }
     }
     

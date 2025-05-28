@@ -8,7 +8,7 @@ import { marked } from 'marked';
 import { BiCopy } from "react-icons/bi"
 import { HiPlay } from "react-icons/hi2"
 
-import { RiDeleteBin5Line } from "react-icons/ri"
+import { RiDeleteBin5Line, RiRobot3Line } from "react-icons/ri"
 
 const Chat = () => {
     const {chatId} = useParams()
@@ -67,10 +67,13 @@ const Chat = () => {
             
                 !message.is_user ?
                 
-                    <div className="text-left text-md md:text-lg my-5 ml-[10%] md:ml-[15%] mr-[5%] md:mr-[12.5%]">
-                        <p dangerouslySetInnerHTML={{ __html: marked.parse(message.content) }} className="space-y-3">
+                    <div className="text-left text-md md:text-lg my-5 ml-[10%] md:ml-[15%] mr-[5%] md:mr-[12.5%] ">
+                        <div className="flex flex-col items-start md:flex-row gap-3">
+                            <RiRobot3Line className=" text-blue-300 flex-shrink-0" size={"1.5em"}/>
+                            <p dangerouslySetInnerHTML={{ __html: marked.parse(message.content) }} className="space-y-3">
                             
-                        </p>
+                            </p>
+                        </div>
                         <div className="flex gap-5 my-5">
                             <div className="tooltip tooltip-bottom" data-tip="Copy text">
 

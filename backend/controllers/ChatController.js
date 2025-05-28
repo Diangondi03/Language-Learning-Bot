@@ -14,10 +14,10 @@ export const getUserChats = asyncHandler(async (req,res)=>{
 
 export const createChat = asyncHandler(async (req,res)=>{
 
-    const {user_id, title} = req.body;
+    const { title } = req.body;
 
     try{
-        const newChat = await db.query("INSERT INTO chat (user_id, title) VALUES ($1, $2) RETURNING *", [user_id, title]);
+        const newChat = await db.query("INSERT INTO chat (user_id, title) VALUES ($1, $2) RETURNING *", [req.user.id, title]);
         res.status(201).json(newChat.rows[0]);
     }
     catch(error){
@@ -28,6 +28,7 @@ export const createChat = asyncHandler(async (req,res)=>{
 export const deleteChat = asyncHandler(async (req,res)=>{
 
     const {id} = req.params;
+    
 
     try{
         await db.query("DELETE FROM chat WHERE chat_id = $1", [id]);

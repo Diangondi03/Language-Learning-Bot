@@ -6,15 +6,17 @@ import { useSignal, useSignals } from "@preact/signals-react/runtime"
 import { useParams } from "react-router"
 import { marked } from 'marked'; 
 import { BiCopy } from "react-icons/bi"
-import { HiPlay } from "react-icons/hi2"
+import { HiPlay,HiPause } from "react-icons/hi2"
 
 import { RiDeleteBin5Line, RiRobot3Line } from "react-icons/ri"
+
 
 const Chat = () => {
     const {chatId} = useParams()
     useSignals()
     const containerRef = useRef<HTMLDivElement>(null);
     const copied = useSignal<boolean>(false)
+    const played = useSignal<boolean>(false)
     const getMessages = async () => {
         try {
             const res = await axiosInstance.get('/message', {
@@ -67,14 +69,14 @@ const Chat = () => {
             
                 !message.is_user ?
                 
-                    <div className="text-left text-md md:text-lg my-5 ml-[10%] md:ml-[15%] mr-[5%] md:mr-[12.5%] ">
+                    <div className="text-left text-md md:text-lg my-5  mx-[5%] md:mx-[12.5%] ">
                         <div className="flex flex-col items-start md:flex-row gap-3">
                             <RiRobot3Line className=" text-blue-300 flex-shrink-0" size={"1.5em"}/>
                             <p dangerouslySetInnerHTML={{ __html: marked.parse(message.content) }} className="space-y-3">
                             
                             </p>
                         </div>
-                        <div className="flex gap-5 my-5">
+                        <div className="flex gap-5 my-5 md:ml-[5%]">
                             <div className="tooltip tooltip-bottom" data-tip="Copy text">
 
                                 <button className="btn btn-circle cursor-pointer" onClick={()=>{
@@ -88,8 +90,11 @@ const Chat = () => {
                                 </button>
                             </div>
                             <div className="tooltip tooltip-bottom" data-tip="Play audio">
-                                <button className="btn btn-circle cursor-pointer">
-                                    <HiPlay/>
+                                <button className="btn btn-circle cursor-pointer" onClick={()=>{played.value = !played.value}}>
+                                    {played.value ?
+                                        <HiPause/> :
+                                        <HiPlay/>
+                                    }
                                 </button>
                             </div>
                         </div>

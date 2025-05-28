@@ -1,13 +1,14 @@
 import { useSignal } from '@preact/signals-react';
 import { useSignals } from '@preact/signals-react/runtime';
 import { IoSend } from 'react-icons/io5'
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import axiosInstance from '../../axiosConfig';
-import { messages } from '../../signals';
+import { messages,chats } from '../../signals';
 
 const InputSection = () => {
 
     const {chatId} = useParams()
+    const navigate = useNavigate()
     const inputText = useSignal<string>("");
     const responding = useSignal<boolean>(false)
     useSignals()
@@ -23,31 +24,40 @@ const InputSection = () => {
 
     const sendText = async () => {
         try{
-
-            if (inputText.value && inputText.value.trim()!=='') {
-                responding.value = true
-                const message = {
-                content: inputText.value.trim(),
-                chatId,
-                is_user: true
-                }
-                const history = messages.value.map((message)=>{
-                    return {role:message.is_user ? "user" : "model",parts:[{text:message.content}]}
-                })
-                const res = await axiosInstance.post('/message', message)
-                messages.value =  [...messages.value, res.data]
+            if(messages.value.length==0){
+                const resNewchat = await axiosInstance.post("/chat",{title:"New chat"})
+                chats.value = [...chats.value,resNewchat.data]
+                await axiosInstance.post("/message",{content:inputText.value.trim(),chatId:resNewchat.data.chat_id,is_user:true})
+                navigate(`/app/${resNewchat.data.chat_id}`)
+            }
+            else{
 
                 
-                
-                inputText.value = "";
-                const resGemini = await axiosInstance.post("/gemini", { prompt: res.data.content,history});
-                const geminiMessage = {
-                    content: resGemini.data.text,
-                    chatId,
-                    is_user:false
+                if (inputText.value && inputText.value.trim()!=='') {
+                    responding.value = true
+                    const message = {
+                        content: inputText.value.trim(),
+                        chatId,
+                        is_user: true
+                    }
+                    const history = messages.value.map((message)=>{
+                        return {role:message.is_user ? "user" : "model",parts:[{text:message.content}]}
+                    })
+                    const res = await axiosInstance.post('/message', message)
+                    messages.value =  [...messages.value, res.data]
+
+                    
+                    
+                    inputText.value = "";
+                    const resGemini = await axiosInstance.post("/gemini", { prompt: res.data.content,history});
+                    const geminiMessage = {
+                        content: resGemini.data.text,
+                        chatId,
+                        is_user:false
+                    }
+                    const geminiMessageRes = await axiosInstance.post('/message', geminiMessage)
+                    messages.value =  [...messages.value, geminiMessageRes.data]
                 }
-                const geminiMessageRes = await axiosInstance.post('/message', geminiMessage)
-                messages.value =  [...messages.value, geminiMessageRes.data]
             }
         }
         catch (error){

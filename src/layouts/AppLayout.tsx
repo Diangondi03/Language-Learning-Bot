@@ -41,8 +41,8 @@ const AppLayout = () => {
     <>
     <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center  bg-base-200 dark:bg-neutral-900 ">
-            <div className="h-fit w-full lg:hidden bg-inherit">
+        <div className="drawer-content flex flex-col items-center  bg-base-200 dark:bg-neutral-900 relative">
+            <div className="h-12 w-full lg:hidden z-1 bg-inherit absolute">
 
             <label htmlFor="my-drawer-2" className="drawer-button  absolute  left-0 p-4 z-1 ">
                 <BiMenu className="cursor-pointer"/>

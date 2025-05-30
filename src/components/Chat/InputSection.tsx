@@ -3,7 +3,8 @@ import { useSignals } from '@preact/signals-react/runtime';
 import { IoSend } from 'react-icons/io5'
 import { useNavigate, useParams } from 'react-router';
 import axiosInstance from '../../axiosConfig';
-import { messages,chats } from '../../signals';
+import { messages,chats, pendingMessage } from '../../signals';
+import { useEffect } from 'react';
 
 const InputSection = () => {
 
@@ -20,51 +21,75 @@ const InputSection = () => {
         }
     };
 
+    const generateGeminiResponse = async ()=>{
+        try{
+
+            const history = messages.value.map((message)=>{
+                return {role:message.is_user ? "user" : "model",parts:[{text:message.content}]}
+            })
+            const resGemini = await axiosInstance.post("/gemini", { prompt: pendingMessage.value.message,history});
+            pendingMessage.value.message = ""
+            pendingMessage.value.id = 0
+            const geminiMessage = {
+                content: resGemini.data.text,
+                chatId,
+                is_user:false
+            }
+            const geminiMessageRes = await axiosInstance.post('/message', geminiMessage)
+            messages.value =  [...messages.value, geminiMessageRes.data]
+        } catch (e){
+            console.log(e)
+        }
+    }
+
+    useEffect(()=>{
+        if(Number(chatId) == pendingMessage.value.id){
+
+            generateGeminiResponse()
+        }
+    },[chatId])
 
 
     const sendText = async () => {
-        try{
-            if(messages.value.length==0){
-                const resNewchat = await axiosInstance.post("/chat",{title:"New chat"})
-                chats.value = [...chats.value,resNewchat.data]
-                await axiosInstance.post("/message",{content:inputText.value.trim(),chatId:resNewchat.data.chat_id,is_user:true})
-                navigate(`/app/${resNewchat.data.chat_id}`)
-            }
-            else{
-
-                
-                if (inputText.value && inputText.value.trim()!=='') {
-                    responding.value = true
+        if (inputText.value && inputText.value.trim()!==''){
+            responding.value = true
+            try{
+                if(messages.value.length==0){
+                    const resNewchat = await axiosInstance.post("/chat",{title:"New chat"})
+                    chats.value = [...chats.value,resNewchat.data]
+                    await axiosInstance.post("/message",{content:inputText.value.trim(),chatId:resNewchat.data.chat_id,is_user:true})
+                    pendingMessage.value.message = inputText.value.trim()
+                    pendingMessage.value.id = resNewchat.data.chat_id
+                    inputText.value = "";
+                    navigate(`/app/${resNewchat.data.chat_id}`)
+                }
+                else{
+                    
+                    
                     const message = {
                         content: inputText.value.trim(),
                         chatId,
                         is_user: true
                     }
-                    const history = messages.value.map((message)=>{
-                        return {role:message.is_user ? "user" : "model",parts:[{text:message.content}]}
-                    })
+
                     const res = await axiosInstance.post('/message', message)
                     messages.value =  [...messages.value, res.data]
-
+                    
                     
                     
                     inputText.value = "";
-                    const resGemini = await axiosInstance.post("/gemini", { prompt: res.data.content,history});
-                    const geminiMessage = {
-                        content: resGemini.data.text,
-                        chatId,
-                        is_user:false
-                    }
-                    const geminiMessageRes = await axiosInstance.post('/message', geminiMessage)
-                    messages.value =  [...messages.value, geminiMessageRes.data]
+                    pendingMessage.value.message = res.data.content
+                    pendingMessage.value.id = Number(chatId)
+                    generateGeminiResponse()
+                    
                 }
             }
-        }
-        catch (error){
-            console.error(error);
-        }
-        finally{
-            responding.value = false
+            catch (error){
+                console.error(error);
+            }
+            finally{
+                responding.value = false
+            }
         }
     }
 

@@ -9,3 +9,7 @@ export const updateMessage = signal<string>("")
 export const indexSidebar = signal<number>(-1)
 export const deleteId = signal<number>()
 export const copied = signal<boolean>(false)
+export const pendingMessage = signal<{message:string;id:number}>({
+    message:"",
+    id:0
+})

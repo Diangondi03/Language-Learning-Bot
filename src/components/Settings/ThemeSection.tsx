@@ -21,7 +21,7 @@ const ThemeSection = () => {
     <div className="flex items-center gap-5">
     
           <h2 className="text-2xl text-center my-5 ">Theme</h2>
-          <input type="checkbox" checked={theme.value=='dark'} className="toggle theme-controller" onClick={setTheme}/>
+          <input type="checkbox" checked={theme.value=='dark'} className="toggle theme-controller" onChange={setTheme}/>
     </div>
   )
 }

@@ -1,13 +1,13 @@
 import { BiMenu } from "react-icons/bi"
 import Sidebar from "../components/Sidebar/Sidebar"
-import LogoutModal from "../components/Home/LogoutModal"
+import LogoutModal from "../components/Chat/LogoutModal"
 import { Outlet, useNavigate } from "react-router"
 import { useSignals } from "@preact/signals-react/runtime"
 import { user } from "../signals"
 import axiosInstance from "../axiosConfig"
 import { useLayoutEffect } from "react"
-import { MdDelete } from "react-icons/md"
-import DeleteModal from "../components/Home/DeleteModal"
+
+import DeleteModal from "../components/Chat/DeleteModal"
 
 const AppLayout = () => {
 

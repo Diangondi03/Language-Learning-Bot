@@ -59,7 +59,7 @@ const ChatList = () => {
                         {chat.title}
                     </span>
                     
-                    <button
+                    <div   
                         className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity text-red-500 p-1 rounded-full hover:bg-red-100 cursor-default"
                         onClick={e => {
                             e.stopPropagation();
@@ -68,7 +68,7 @@ const ChatList = () => {
                         tabIndex={-1}
                     >
                         <RiDeleteBin5Line/>
-                    </button>
+                    </div>
                 </button>
             </li>
         ))}

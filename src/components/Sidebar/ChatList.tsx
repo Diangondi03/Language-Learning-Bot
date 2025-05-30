@@ -44,7 +44,7 @@ const ChatList = () => {
     useEffect(()=>{
         getChatList()
         indexSidebar.value = Number(chatId)
-    },[])
+    },[chatId])
 
   return (
     <div className="max-h-[65vh] h-[65vh] overflow-y-auto flex flex-col gap-0">

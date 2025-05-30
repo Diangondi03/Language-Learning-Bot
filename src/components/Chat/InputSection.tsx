@@ -55,8 +55,9 @@ const InputSection = () => {
             responding.value = true
             try{
                 if(messages.value.length==0){
-                    const resNewchat = await axiosInstance.post("/chat",{title:"New chat"})
-                    chats.value = [...chats.value,resNewchat.data]
+                    const resTitle = await axiosInstance.post("/gemini/title",{message:inputText.value.trim()})
+                    const resNewchat = await axiosInstance.post("/chat",{title:resTitle.data.title})
+                    chats.value = [resNewchat.data,...chats.value]
                     await axiosInstance.post("/message",{content:inputText.value.trim(),chatId:resNewchat.data.chat_id,is_user:true})
                     pendingMessage.value.message = inputText.value.trim()
                     pendingMessage.value.id = resNewchat.data.chat_id
@@ -109,7 +110,7 @@ const InputSection = () => {
 
 
             </textarea>
-            <button className={`absolute right-5 bottom-5 btn ${(inputText.value && inputText.value.trim()!=='') ? "btn-primary cursor-pointer" : "cursor-default bg-gray-200 text-gray-300 dark:bg-neutral-700 dark:text-neutral-800 dark:border-none dark:shadow-none"} btn-circle p-2 self-start`}
+            <button className={`absolute right-5 bottom-5 btn ${(inputText.value && inputText.value.trim()!=='' && !responding.value) ? "btn-primary cursor-pointer" : "cursor-default bg-gray-200 text-gray-300 dark:bg-neutral-700 dark:text-neutral-800 dark:border-none dark:shadow-none"} btn-circle p-2 self-start`}
             onClick={sendText}>
             <IoSend/>
             </button>

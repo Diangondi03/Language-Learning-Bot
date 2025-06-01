@@ -26,6 +26,7 @@ const AppLayout = () => {
 
     useLayoutEffect(() => {
         const theme = localStorage.getItem('theme')
+        window.speechSynthesis.cancel()
         if(theme && theme==='dark'){
             document.body.classList.add('dark')
         }

@@ -6,10 +6,35 @@ import { copied } from '../../signals';
 import { BiCopy } from 'react-icons/bi';
 import { HiPause, HiPlay } from 'react-icons/hi2';
 import { Message } from '../../interfaces';
+import { speak } from '../../speak';
 
 const MessageBubble = ({message}:{message:Message}) => {
     useSignals()
     const played = useSignal<boolean>(false)
+    const isSpeaking = useSignal<boolean>(false)
+    const playMessage = ()=>{
+        if (!("speechSynthesis" in window)) return;
+
+        if (!isSpeaking) {
+          window.speechSynthesis.cancel();
+          const utterance = new window.SpeechSynthesisUtterance(message.content);
+      
+          // Listen for when the speech ends
+          utterance.onend = () => {
+            isSpeaking.value = false
+            played.value = false
+            // You can do anything here, e.g., update UI, play next message, etc.
+          };
+      
+          utterance.onpause = () => setIsPaused(true);
+          utterance.onresume = () => setIsPaused(false);
+      
+          utteranceRef.current = utterance;
+          window.speechSynthesis.speak(utterance);
+          isSpeaking.value = false
+          played.value = false
+        }
+    }
     
   return (
     !message.is_user ?
@@ -35,7 +60,7 @@ const MessageBubble = ({message}:{message:Message}) => {
                 </button>
             </div>
             <div className="tooltip tooltip-bottom" data-tip="Play audio">
-                <button className="btn btn-circle cursor-pointer" onClick={()=>{played.value = !played.value}}>
+                <button className="btn btn-circle cursor-pointer" onClick={playMessage}>
                     {played.value ?
                         <HiPause/> :
                         <HiPlay/>

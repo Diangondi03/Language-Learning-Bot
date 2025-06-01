@@ -37,16 +37,19 @@ const Chat = () => {
     }
     useEffect(() => {
         getMessages()
+        
     }, [chatId])
 
     useEffect(() => {
         if (containerRef.current) {
         containerRef.current.scrollTo({
             top: containerRef.current.scrollHeight,
-            behavior: "smooth"
+            behavior:'smooth'
         });
         }
-      }, [messages.value.length]);
+      }, [chatId,messages.value.length]);
+
+    
 
     const getChatIndex = () => {
         const index = chats.value.findIndex(chat => chat.chat_id === Number(chatId))
@@ -59,6 +62,10 @@ const Chat = () => {
             deleteId.value = Number(chatId)
         }
     }
+
+
+
+    
 
   return (
     <>

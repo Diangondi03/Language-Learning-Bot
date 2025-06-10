@@ -13,3 +13,5 @@ export const pendingMessage = signal<{message:string;id:number}>({
     message:"",
     id:0
 })
+
+export const currentPlayingId = signal<number | null>()

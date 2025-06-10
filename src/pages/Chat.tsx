@@ -37,8 +37,7 @@ const Chat = () => {
     }
     useEffect(() => {
         getMessages()
-        
-    }, [chatId])
+    }, [chatId])    
 
     useEffect(() => {
         if (containerRef.current) {

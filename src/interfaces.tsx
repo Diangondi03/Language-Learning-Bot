@@ -43,6 +43,6 @@ export interface Message {
   content: string;
   chatId: string;
   is_user: boolean;
-
+  message_id: number;
 }
 

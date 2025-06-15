@@ -93,6 +93,7 @@ const MessageBubble = ({message}:{message:Message}) => {
     <div className="text-left text-md md:text-lg my-5  mx-[5%] md:mx-[12.5%] ">
         <div className="flex flex-col items-start md:flex-row gap-3">
             <RiRobot3Line className=" text-blue-300 flex-shrink-0" size={"1.5em"}/>
+            
             <p dangerouslySetInnerHTML={{ __html: marked.parse(message.content) }} className="space-y-3">
             
             </p>

@@ -83,13 +83,7 @@ export const Login = () => {
               </Form>
             )}
           </Formik>
-          <div className="flex w-full flex-col">
-            <div className="divider">OR</div>
-            <button className="btn btn-outline w-full">
-              <FcGoogle/>
-              Log in with Google
-            </button>
-          </div>
+
             <p className="text-center mt-4 flex items-center justify-center">
             Don't have an account?
             <Link className='btn btn-link px-1' to="/auth/signup">Sign up</Link>

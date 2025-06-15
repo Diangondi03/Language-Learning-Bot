@@ -88,13 +88,7 @@ export const Signup = () => {
               </Form>
             )}
           </Formik>
-          <div className="flex w-full flex-col">
-            <div className="divider">OR</div>
-            <button className="btn btn-outline w-full">
-              <FcGoogle/>
-              Sign up with Google
-            </button>
-          </div>
+
           <p className="text-center mt-4 flex items-center justify-center">
 
             Already have an account? 

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import axiosInstance from "../axiosConfig"
 import InputSection from "../components/Chat/InputSection"
-import { chats, copied, deleteId, messages, user } from "../signals"
+import { chats, copied, deleteId, messages, pendingMessage, user } from "../signals"
 import { useSignals } from "@preact/signals-react/runtime"
 import { useParams } from "react-router"
  
@@ -15,7 +15,6 @@ const Chat = () => {
     const {chatId} = useParams()
     useSignals()
     const containerRef = useRef<HTMLDivElement>(null);
-    
 
     const getMessages = async () => {
         if(!chatId){
@@ -37,6 +36,7 @@ const Chat = () => {
     }
     useEffect(() => {
         getMessages()
+
     }, [chatId])    
 
     useEffect(() => {
@@ -92,7 +92,12 @@ const Chat = () => {
                 
                 <h2 className="text-center text-3xl font-bold">{"Hello " + user?.value?.username}</h2>
             }
-
+            {pendingMessage.value.message &&
+                <div className="flex justify-center w-full my-5 gap-4">
+                    <p>Generating response</p>
+                    <span className="loading loading-ring loading-md"></span>
+                </div>
+            }
 
         </div>
 

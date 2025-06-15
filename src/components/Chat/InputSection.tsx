@@ -3,7 +3,7 @@ import { useSignals } from '@preact/signals-react/runtime';
 import { IoSend } from 'react-icons/io5'
 import { useNavigate, useParams } from 'react-router';
 import axiosInstance from '../../axiosConfig';
-import { messages,chats, pendingMessage } from '../../signals';
+import { messages,chats, pendingMessage} from '../../signals';
 import { useEffect } from 'react';
 
 const InputSection = () => {
@@ -12,6 +12,7 @@ const InputSection = () => {
     const navigate = useNavigate()
     const inputText = useSignal<string>("");
     const responding = useSignal<boolean>(false)
+    
     useSignals()
 
     const handleInput = (e: React.FormEvent<HTMLTextAreaElement>)  => {
@@ -101,7 +102,7 @@ const InputSection = () => {
 
             <textarea
             disabled={responding.value}
-            className=" textarea w-full relative textarea-bordered text-md pr-20 resize-none rounded-3xl border-gray-400 focus:outline-0 p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-gray-200"
+            className=" textarea w-full relative textarea-bordered text-md pr-20 resize-none rounded-3xl border-gray-400 focus:outline-0 p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-gray-200 disabled:bg-neutral-200 disabled:dark:bg-neutral-900 disabled:border-gray-400 disabled:dark:border-neutral-700"
             placeholder="Type your message here..."
             value={inputText.value}
             onInput={handleInput}

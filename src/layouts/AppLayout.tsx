@@ -42,7 +42,7 @@ const AppLayout = () => {
     <>
     <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center  bg-base-200 dark:bg-neutral-900 relative">
+        <div className="drawer-content max-h-screen flex flex-col items-center  bg-base-200 dark:bg-neutral-900 relative">
             <div className="h-12 w-full lg:hidden z-1 bg-inherit absolute">
 
             <label htmlFor="my-drawer-2" className="drawer-button  absolute  left-0 p-4 z-1 ">

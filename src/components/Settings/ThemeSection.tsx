@@ -15,7 +15,6 @@ const ThemeSection = () => {
       theme.value = 'light'
     }
   }
-  console.log(theme)
 
   return (
     <div className="flex items-center gap-5">

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import db from '../db.js'; // Import the PostgreSQL pool
+import db from '../db.js';
 import asyncHandler from "../middleware/asyncHandler.js";
 
 
@@ -8,42 +8,48 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 export const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
-
-
-  const userCheckQuery = 'SELECT * FROM users WHERE email = $1';
-  const userCheckResult = await db.query(userCheckQuery, [email]);
-
-  if (userCheckResult.rows.length > 0) {
-    return res.status(400).json({ message: 'Email is already in use' });
+  const {data,error} = await db.from('users').select().eq('email', email);
+  if (error) {
+    return res.status(500).json({ message: 'Database error' });
   }
 
+  if (data.length > 0) {
+    return res.status(400).json({ message: 'Email is already in use' });
+  }
   const password_hash = await bcrypt.hash(password, 10);
 
-  const insertUserQuery = `
-    INSERT INTO users (username, email, password_hash)
-    VALUES ($1, $2, $3)
-    RETURNING user_id, username, email;
-  `;
 
-  const newUser = await db.query(insertUserQuery, [username, email, password_hash]);
+
+  const {data:userData,error:userError} = await db.from('users').insert({
+    username,
+    email,
+    password_hash
+  }).select('user_id, username, email').single();
+
+  if (userError) {
+    return res.status(500).json({ message: 'Database error' });
+  }
+
+
   res.status(201).json({
     message: 'User registered successfully',
-    user: newUser.rows[0],
+    user: userData,
   });
 });
 
 export const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  // Check if the user exists in the database
-  const userCheckQuery = 'SELECT * FROM users WHERE email = $1';
-  const userCheckResult = await db.query(userCheckQuery, [email]);
+  const {data:userData,error:userError} = await db.from('users').select().eq('email', email);
 
-  if (userCheckResult.rows.length === 0) {
-    return res.status(400).json({ message: 'Invalid email or password' });
+  if (userError) {
+    return res.status(500).json({ message: 'Database error' });
   }
 
-  const user = userCheckResult.rows[0];
+  if (!userData || userData.length === 0) {
+    return res.status(400).json({ message: 'Invalid email or password' });
+  }
+  const user = userData[0];
 
   const isPasswordValid = await bcrypt.compare(password, user.password_hash);
 

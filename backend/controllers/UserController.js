@@ -20,14 +20,16 @@ export const getUserById = asyncHandler( async(req, res) => {
 
 export const updateUserById = asyncHandler(async (req, res) => {
     try {
-        const userId = req.user.id; // Assuming user ID is in req.user
+        const userId = req.user.id; 
         const { username, email,password } = req.body;
 
-        // Check if the new email is the same as the current user's email
         if (email !== req.user.email) {
-            // Check if the new email already exists in the database
-            const existingUser = await db.query('SELECT * FROM users WHERE email = $1', [email]);
-            if (existingUser.rows.length > 0) {
+
+            const {data:existingUser, error} = await db.from('users').select().eq('email', email);
+            if (error) {
+                return res.status(500).json({ message: 'Database error' });
+            }
+            if (existingUser.length> 0) {
                 return res.status(400).json({ message: 'Email already in use' });
             }
         }
@@ -35,46 +37,39 @@ export const updateUserById = asyncHandler(async (req, res) => {
         const isUsernameSame = username === req.user.username;
         const isEmailSame = email === req.user.email;
 
-        const fields = [];
-        const values = [];
+        const fields = {};
 
         if (!isUsernameSame) {
-            fields.push('username = $1');
-            values.push(username);
+            fields.username = username;
         }
         if (!isEmailSame) {
-            fields.push(`email = $${fields.length + 1}`);
-            values.push(email);
+            fields.email = email;
         }
         if (password) {
             const hashedPassword = await bcrypt.hash(password, 10);
-            fields.push(`password_hash = $${fields.length + 1}`);
-            values.push(hashedPassword);
+            fields.password_hash = hashedPassword;
         }
 
-        if (fields.length === 0) {
+        if (isUsernameSame && isEmailSame && !password) {
             return res.status(200).json({ message: 'No changes detected' });
         }
 
-        values.push(userId);
+        const {data,error} = await db.from("users").update({
+            ...fields
+        }).eq('user_id', userId).select();
 
-        const result = await db.query(
-            `UPDATE users SET ${fields.join(', ')} WHERE user_id = $${values.length}`,
-            values
-        );
 
-        if (result.rows.affectedRows === 0) {
+
+        if (data.length === 0) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Fetch updated user
-        
 
         const token = jwt.sign(
             {
                 id: userId,
-                username: username,
-                email: email,
+                username,
+                email,
             },
             JWT_SECRET,
             { expiresIn: '24h' }
@@ -87,6 +82,7 @@ export const updateUserById = asyncHandler(async (req, res) => {
         });
 
     } catch (error) {
+        console.error('Error updating user:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });

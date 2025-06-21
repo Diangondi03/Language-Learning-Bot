@@ -7,9 +7,8 @@ export const getChatMessages = asyncHandler(async (req,res)=>{
         return res.status(400).json({ message: 'Chat ID is required' });
     }
     try{
-
-        const chats = await db.query("SELECT * FROM message WHERE chat_id = $1", [chatId]);
-        res.status(200).json(chats.rows);
+        const {data,error} = await db.from('message').select().eq('chat_id', chatId);
+        res.status(200).json(data);
     }
     catch(error){
         res.status(500).json({ message: 'Internal server error' });
@@ -19,17 +18,20 @@ export const getChatMessages = asyncHandler(async (req,res)=>{
 
 export const createMessage = asyncHandler(async (req, res) => {
     const { chatId,content,is_user } = req.body;
-    console.log(content)
     if (!chatId || !content) {
         return res.status(400).json({ message: 'chat_id, content are required' });
     }
     try {
-        const result = await db.query(
-            "INSERT INTO message (chat_id, content, is_user) VALUES ($1, $2, $3) RETURNING *",
-            [chatId, content, is_user]
-        );
+        const {data,error} = await db.from('message').insert({
+            chat_id: chatId,
+            content: content,
+            is_user: is_user
+        }).select().single();
+        if (error) {
+            return res.status(500).json({ message: 'Database error' });
+        }
 
-        res.status(201).json(result.rows[0]);
+        res.status(201).json(data);
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
     }

@@ -1,5 +1,6 @@
 import db from '../db.js';
-import asyncHandler from '../middleware/asyncHandler.js';
+import * as asyncHandlerModule from "../middleware/asyncHandler.js";
+const asyncHandler = asyncHandlerModule.default;
 
 export const getChatMessages = asyncHandler(async (req,res)=>{
     const chatId = req.query.chatId; // Assuming chatId is passed as a query parameter

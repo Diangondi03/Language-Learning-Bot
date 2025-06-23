@@ -1,8 +1,9 @@
 import db from '../db.js';
-import asyncHandler from '../middleware/asyncHandler.js';
+import * as asyncHandlerModule from "../middleware/asyncHandler.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET;
+const asyncHandler = asyncHandlerModule.default;
 
 
 export const getUserById = asyncHandler( async(req, res) => {

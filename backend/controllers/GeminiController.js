@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import * as asyncHandlerModule from "../middleware/asyncHandler.js";
-const asyncHandler = asyncHandlerModule.default;
+import asyncHandler from "../middleware/asyncHandler.js";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 

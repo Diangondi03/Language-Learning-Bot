@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../db.js';
-import * as asyncHandlerModule from "../middleware/asyncHandler.js";
-const asyncHandler = asyncHandlerModule.default;
+import asyncHandler from "../middleware/asyncHandler.js";
 
 
 const JWT_SECRET = process.env.JWT_SECRET;

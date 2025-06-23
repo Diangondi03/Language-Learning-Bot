@@ -1,6 +1,5 @@
 import db from '../db.js';
-import * as asyncHandlerModule from "../middleware/asyncHandler.js";
-const asyncHandler = asyncHandlerModule.default;
+import asyncHandler from '../middleware/asyncHandler.js';
 
 export const getUserChats = asyncHandler(async (req,res)=>{
     try{

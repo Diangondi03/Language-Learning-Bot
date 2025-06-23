@@ -3,7 +3,6 @@ import { BsKeyFill} from 'react-icons/bs';
 import * as Yup from 'yup';
 import { InputField } from '../components/InputField';
 import { FormFieldConfig, LoginValues } from '../interfaces';
-import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router';
 import axiosInstance from '../axiosConfig';
 import { useSignal } from '@preact/signals-react';

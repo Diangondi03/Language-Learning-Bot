@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const port = 3000;
 
 app.use('/auth', authRoutes);
 app.use('/user',authMiddleware,userRoutes);
@@ -24,9 +23,4 @@ app.use('/chat',authMiddleware,chatRoutes);
 app.use('/message',authMiddleware,messageRoutes);
 app.use('/gemini',authMiddleware,geminiRoutes);
 
-
-
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+export default app;

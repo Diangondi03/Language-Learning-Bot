@@ -1,0 +1,10 @@
+[build]
+  functions = "netlify/functions" 
+  publish = "path/to/your/frontend/build"
+  command = "npm run build-frontend"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true

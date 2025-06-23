@@ -3,7 +3,6 @@ import { BsPerson, BsKeyFill} from 'react-icons/bs'; // Assuming you might add p
 import * as Yup from 'yup';
 import { InputField } from '../components/InputField';
 import { FormFieldConfig, SignupValues } from '../interfaces';
-import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router';
 import axiosInstance from '../axiosConfig';
 import { HiOutlineMail } from 'react-icons/hi';

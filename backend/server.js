@@ -23,4 +23,8 @@ app.use('/chat',authMiddleware,chatRoutes);
 app.use('/message',authMiddleware,messageRoutes);
 app.use('/gemini',authMiddleware,geminiRoutes);
 
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
+});
+
 export default app;

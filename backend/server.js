@@ -10,7 +10,9 @@ import messageRoutes from './routes/message.js';
 import geminiRoutes from "./routes/gemini.js"
 import authMiddleware from './middleware/AuthMiddleware.js';
 
+import 'dotenv/config'
 
+const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,8 +25,8 @@ app.use('/chat',authMiddleware,chatRoutes);
 app.use('/message',authMiddleware,messageRoutes);
 app.use('/gemini',authMiddleware,geminiRoutes);
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 export default app;

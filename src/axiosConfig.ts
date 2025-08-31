@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: "https://language-learning-bot-2txa.onrender.com", // Replace with your API base URL
+  baseURL: import.meta.env.VITE_API_BASE_URL, // Replace with your API base URL
 });
 
 // Add a request interceptor to include the token in the Authorization header
